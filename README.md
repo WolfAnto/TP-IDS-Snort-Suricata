@@ -145,6 +145,7 @@ http://127.0.0.1:8000
 Paramètres → entrées de données → fichier ajouter /var/log/suricata/eve.json
 
 VM Backtrack (Carte en pont) :
+
 ![image](https://user-images.githubusercontent.com/73076854/228930607-e20e5517-d60b-4ff2-92de-0e76d3266031.png)
 
 ```
