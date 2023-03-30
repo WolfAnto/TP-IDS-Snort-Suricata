@@ -126,3 +126,73 @@ http://127.0.0.1:8000
 ```
 
 Paramètres → entrées de données → fichier ajouter /var/log/suricata/eve.json
+
+VM Backtrack (Carte en pont) :
+```
+snort –dev –i eth0
+```
+
+```
+snort -b -i eth0 -l ./ -L snort.pcap
+```
+
+```
+snort –dev snort.pcap.1147077043 (attention au path)
+```
+
+ou
+
+```
+wireshark -r snort.pcap.1147077043
+```
+
+1. Connectez-vous à la base de données MySQL :
+```
+mysql -u root -p
+```
+
+2. Une fois connecté, listez les tables disponibles :
+```
+SHOW TABLES;
+```
+
+3. Sélectionnez la table 'data' et affichez son contenu :
+```
+SELECT * FROM data;
+```
+
+4. Pour quitter la console MySQL, tapez simplement :
+```
+EXIT;
+```
+
+Modifier le fichier /etc/snort/rules/snort.conf :
+```
+nano /etc/snort/rules/snort.conf
+```
+```
+ HOME_NET, EXTERNAL_NET
+```
+
+```
+Ajouter sensor_name=sonde_rt pour la sortie vers la base :
+output database …. sensor_name=sonde1_rt
+ne laisser que ses règles locales pour l’instant
+# include $RULE_PATH/info.rules
+# include $RULE_PATH/icmp-info.rules
+include $RULE_PATH/local.rules
+```
+
+Ajouter une alerte avec le message « ALERT TEST ICMP » pour toutes les trames ICMP
+dans le fichier local.rules :
+```
+nano /etc/snort/rules/local.rules
+```
+
+```
+cd /etc/snort/rules
+```
+
+```
+snort -vde -c snort.conf
+```
