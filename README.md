@@ -1,10 +1,14 @@
-# TP-IDS-Snort-Suricata
+## TP-IDS-Snort-Suricata
 
+# Schéma du TP
 
 ![image](https://user-images.githubusercontent.com/73076854/228902772-0b711fe5-d78f-4632-b2c8-380be839addb.png)
 
-
-VM 1 :
+# II ] Les sondes
+- Configuration VM 1 :
+```
+apt update && apt install bridge-utils
+```
 ```
 nano /etc/network/interfaces
 ```
@@ -19,7 +23,7 @@ iface br0 inet dhcp
 ```
 ![image](https://user-images.githubusercontent.com/73076854/228929294-84da1cef-e12a-4c10-a91b-86c4c66bf8a0.png)
 
-VM 2 :
+- Configuration VM 2 :
 ```
 nano /etc/network/interfaces
 ```
@@ -32,9 +36,18 @@ address 192.168.5.1/24
 ![image](https://user-images.githubusercontent.com/73076854/228929446-2141d257-91c1-4fe9-bb64-094b8c88e21a.png)
 
 
-Vérifier le trafic (VM 1) :
+- Vérifier le trafic (VM 1) :
 ```
 tcpdump -nvx -i eth0
+```
+Désactivation du routage IP au niveau du noyau
+```
+nano /etc/sysctl.conf
+net.ipv4.ip_forward=0
+```
+Une règle NetFilter/IPTables qui interdit toute émission de paquet sur l'interface activée en mode
+stealth
+```
 iptables -t nat -F 
 iptables -A OUTPUT -o eth1 -j DROP
 apt-get install iptables-persistent 
@@ -42,12 +55,16 @@ iptables-save > /etc/iptables/rules
 ```
 ![image](https://user-images.githubusercontent.com/73076854/228929630-523f4063-1b41-48fb-bd25-9f20b6982f83.png)
 
+# III] Suricata
+- Sur la VM 1 (Doutes ?!!)
+- Installer Suricata et mettre la liste de règles à journaux
 ```
 apt install suricata
 apt install suricata-oinkmaster-updater
 apt install suricata-update
 ```
 
+- Ajouter vos propres règles
 ```
 nano /etc/suricata/rules/my.rules
 ```
@@ -70,6 +87,10 @@ rule-files:
 ```
 ![image](https://user-images.githubusercontent.com/73076854/228929823-7fa2e090-39b0-4f8b-87c6-c79cfae6524f.png)
 
+- Debug fichier de configuration Suricata. 
+Avant cette manipulation, essayer de redemarrer Suricata
+- Si il est en erreur, alors faire la manipulation ci-dessous
+- Sinon ne pas faire la manipulation ci-dessous
 ```
 nano /lib/systemd/system/suricata.service 
 Ajouter a la de la ligne "ExecStart" : -i br0
@@ -80,6 +101,7 @@ Ajouter a la de la ligne "ExecStart" : -i br0
 /etc/init.d/suricata restart
 ```
 
+Test pour récupérer les log d'alertes
 ```
 ping YOUR_INTERNET_IUT_IP
 ```
@@ -119,6 +141,7 @@ alert tcp any any -> any any (msg:"Trafic Kazaa détecté"; flow:established; co
 ## Aucune Alerte ne marche
 ![image](https://user-images.githubusercontent.com/73076854/228930415-49fa0125-a47a-46e7-a8bc-867d0d8a27cb.png)
 
+- Installation de Splunk
 ```
 wget -O splunk-9.0.4.1-419ad9369127-linux-2.6-amd64.deb "https://download.splunk.com/products/splunk/releases/9.0.4.1/linux/splunk-9.0.4.1-419ad9369127-linux-2.6-amd64.deb"
 ```
@@ -131,6 +154,7 @@ dpkg -i splunk-9.0.4.1-419ad9369127-linux-2.6-amd64.deb
 cd /opt/splunk/bin
 ```
 
+- Démarrage/Configuration de Splunk
 ```
 ./splunk start
 ```
@@ -143,6 +167,13 @@ http://127.0.0.1:8000
 ```
 
 Paramètres → entrées de données → fichier ajouter /var/log/suricata/eve.json
+
+Search & Reporting : cliquez sur "résumé des données"
+dans sources : sélectionner "/var/log/suricata/eve.json"
+
+![image](https://user-images.githubusercontent.com/73076854/228933726-5e2e73b2-c073-46a2-9f8f-63ca79016c15.png)
+
+#IV] Installation de Snort IDScenter
 
 VM Backtrack (Carte en pont) :
 
