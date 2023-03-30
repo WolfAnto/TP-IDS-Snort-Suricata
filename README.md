@@ -7,19 +7,28 @@ Réseau interne 192.168.5.0/24
 
 
 VM 1 :
+```
 nano /etc/network/interfaces
+```
+
+```
 auto eth0
 auto eth1
 auto br0
 iface br0 inet manual
 		bridge-interfaces eth1 eth0
+```
 
 VM 2 :
+```
 nano /etc/network/interfaces
+```
+
+```
 auto eth0
 iface eth0 inet static
 address 192.168.5.1/24
-
+```
 
 Vérifier le trafic (VM 1) :
 ```
