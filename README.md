@@ -5,6 +5,8 @@ Internet 192.168.2.0/23 ( RT )
 DMZ 192.168.4.0/24
 Réseau interne 192.168.5.0/24
 
+![image](https://user-images.githubusercontent.com/73076854/228902772-0b711fe5-d78f-4632-b2c8-380be839addb.png)
+
 
 VM 1 :
 ```
