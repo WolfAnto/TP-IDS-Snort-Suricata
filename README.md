@@ -191,16 +191,13 @@ snort –dev –i eth0
 ```
 snort -b -i eth0 -l ./ -L snort.pcap
 ```
+![image](https://user-images.githubusercontent.com/73076854/229135531-83481863-9114-4472-9e0e-0add538abad5.png)
 
 ```
-snort –dev snort.pcap.1147077043 (attention au path)
+snort –r snort.pcap.1147077043 (attention au path)
 ```
+![image](https://user-images.githubusercontent.com/73076854/229136114-fa7616f9-a758-4a84-aafa-3b057624c68f.png)
 
-ou
-
-```
-wireshark -r snort.pcap.1147077043
-```
 
 1. Connectez-vous à la base de données MySQL :
 ```
@@ -243,6 +240,7 @@ Ajouter une alerte avec le message « ALERT TEST ICMP » pour toutes les trames 
 dans le fichier local.rules :
 ```
 nano /etc/snort/rules/local.rules
+alert icmp any any <> any any ( msg:"test icmp";)
 ```
 
 ```
