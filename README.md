@@ -138,8 +138,6 @@ alert tcp any any -> any 3306 (msg:"Connexion entrante vers MySQL"; flow:establi
 ```
 alert tcp any any -> any any (msg:"Trafic Kazaa détecté"; flow:established; content:"UserAgent\: KazaaClient"; classtype:policy-violation; sid:1000005; rev:1;)
 ```
-## Aucune Alerte ne marche
-![image](https://user-images.githubusercontent.com/73076854/228930415-49fa0125-a47a-46e7-a8bc-867d0d8a27cb.png)
 
 Installation de Splunk
 ```
