@@ -176,6 +176,7 @@ Search & Reporting : cliquez sur "résumé des données"
 dans sources : sélectionner "/var/log/suricata/eve.json"
 
 ![image](https://user-images.githubusercontent.com/73076854/228933726-5e2e73b2-c073-46a2-9f8f-63ca79016c15.png)
+![image](https://user-images.githubusercontent.com/73076854/229093969-d1d34145-f523-41b3-8d0a-49a365ad10b7.png)
 
 # IV] Installation de Snort IDScenter
 
