@@ -98,6 +98,12 @@ Ajouter a la de la ligne "ExecStart" : -i br0
 ![image](https://user-images.githubusercontent.com/73076854/228929897-1defafc9-b97a-4923-945d-1aa85de83fbe.png)
 
 ```
+nano /etc/suricata/suricata.yaml
+Remplacer "default par "br0" à la ligne 654
+```
+![image](https://user-images.githubusercontent.com/73076854/229089025-99d4a8a6-a061-4813-977f-6d8a562e3f97.png)
+
+```
 /etc/init.d/suricata restart
 ```
 
