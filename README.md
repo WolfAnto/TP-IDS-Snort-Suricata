@@ -110,7 +110,7 @@ dans une autre console :
 ```
 tail -f /var/log/suricata/fast.log 
 ```
-![image](https://user-images.githubusercontent.com/73076854/228930267-b65c154e-c9aa-4690-8acd-2c267437d3e0.png)
+![image](https://user-images.githubusercontent.com/73076854/229088037-022bf961-dde3-40e0-aa12-c37819a6763b.png)
 
 Tester les règles suivantes :
 (Les ajouter dans "/etc/suricata/rules/my.rules")
